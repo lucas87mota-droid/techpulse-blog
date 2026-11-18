@@ -1,0 +1,169 @@
+# TechPulse — Blog de Tecnologia
+
+O TechPulse é um blog de tecnologia desenvolvido como projeto acadêmico. A aplicação apresenta notícias, categorias e uma página de leitura individual.
+
+O projeto possui front-end separado de um back-end Node.js/Express e utiliza o Supabase para armazenar os e-mails cadastrados na newsletter.
+
+## Funcionalidades
+
+- Página inicial com notícias;
+- Página de categorias;
+- Página de leitura individual;
+- Consumo de notícias por API;
+- Imagens locais para as publicações;
+- Formulário de inscrição na newsletter;
+- Validação de e-mail;
+- Cadastro dos inscritos no Supabase;
+- API própria com Node.js e Express;
+- Endpoint de verificação do servidor;
+- Layout responsivo com Bootstrap.
+
+## Tecnologias utilizadas
+
+### Front-end
+
+- HTML5;
+- CSS3;
+- Bootstrap 5;
+- JavaScript;
+- AngularJS;
+- API REST.
+
+### Back-end
+
+- Node.js;
+- Express;
+- CORS;
+- Dotenv;
+- Supabase JavaScript Client.
+
+### Banco de dados
+
+- Supabase;
+- PostgreSQL.
+
+## Estrutura do projeto
+
+```text
+Techpulse blog/
+├── backend/
+│   ├── src/
+│   │   ├── lib/
+│   │   │   └── supabase.js
+│   │   ├── routes/
+│   │   │   └── inscritos.js
+│   │   └── server.js
+│   ├── env.example
+│   ├── package.json
+│   └── README.md
+├── database/
+│   └── supabase.sql
+├── IMG/
+├── app.js
+├── categoria.html
+├── index.html
+├── leitura.html
+├── style.css
+└── README.md
+
+Como executar o backend
+Entre na pasta do backend:
+cd backend
+
+Instale as dependências:
+npm install
+
+Crie uma cópia do arquivo:
+env.example
+
+Renomeie a cópia para:
+.env
+
+Preencha o arquivo .env:
+
+PORT=3333
+FRONTEND_URL=http://127.0.0.1:5500
+SUPABASE_URL=https://seu-projeto.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=sua-chave-secreta
+A chave secreta do Supabase não deve ser publicada no GitHub.
+
+Inicie o backend:
+npm run dev
+
+O servidor será iniciado em:
+http://localhost:3333
+
+Rotas da API
+Verificação do servidor
+http
+GET /api/health
+
+Resposta:
+JSON
+{
+  "status": "ok",
+  "servico": "techpulse-backend"
+}
+
+Cadastro de inscrito
+http
+POST /api/inscritos
+
+Corpo da requisição:
+JSON
+{
+  "email": "leitor@example.com"
+}
+
+Possíveis respostas:
+201: e-mail cadastrado;
+400: e-mail inválido;
+409: e-mail já cadastrado;
+500: erro no servidor ou no Supabase.
+
+Banco de dados
+A tabela utilizada é:
+inscritos
+
+Ela possui as seguintes colunas:
+id
+email
+data_cadastro
+
+O script de criação está em:
+database/supabase.sql
+
+Segurança
+O arquivo .env está protegido pelo .gitignore e não deve ser enviado ao GitHub.
+
+A chave secreta do Supabase é utilizada somente no backend. Ela não deve ser inserida em:
+index.html;
+app.js;
+style.css;
+imagens;
+README;
+repositório público.
+
+Arquitetura da aplicação
+
+Usuário
+   ↓
+Front-end HTML/CSS/JavaScript
+   ↓
+API Node.js/Express
+   ↓
+Supabase
+   ↓
+Tabela inscritos
+
+As notícias são obtidas da API externa do blog, enquanto os e-mails da newsletter são enviados para o backend próprio e armazenados no Supabase.
+Autor
+Projeto acadêmico desenvolvido por Lucas Mota.
+Plain Text
+
+Depois salve o arquivo e envie para o GitHub:
+
+```cmd
+git add README.md
+git commit -m "Adiciona documentação do projeto"
+git push
