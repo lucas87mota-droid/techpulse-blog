@@ -67,6 +67,7 @@ Techpulse blog/
 ├── style.css
 └── README.md
 
+```
 ## Como executar o backend
 
 Entre na pasta do backend:
@@ -159,4 +160,8 @@ API Node.js/Express
 Supabase
    ↓
 Tabela inscritos
+```
+## Autor
+
+Projeto acadêmico desenvolvido por Lucas Mota.
 
