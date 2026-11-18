@@ -40,7 +40,8 @@ O projeto possui front-end separado de um back-end Node.js/Express e utiliza o S
 ### Banco de dados
 
 - Supabase;
-- PostgreSQL.
+- Tabela `inscritos`;
+- Políticas de segurança RLS.
 
 ## Estrutura do projeto
 
@@ -66,29 +67,31 @@ Techpulse blog/
 ├── style.css
 └── README.md
 
-Como executar o backend
+## Como executar o backend
+
 Entre na pasta do backend:
+
+```cmd
 cd backend
+```
 
 Instale as dependências:
+
+```cmd
 npm install
+```
 
-Crie uma cópia do arquivo:
-env.example
+Copie `env.example` e renomeie a cópia para:
 
-Renomeie a cópia para:
+```text
 .env
-
-Preencha o arquivo .env:
-
-PORT=3333
-FRONTEND_URL=http://127.0.0.1:5500
-SUPABASE_URL=https://seu-projeto.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=sua-chave-secreta
-A chave secreta do Supabase não deve ser publicada no GitHub.
+```
 
 Inicie o backend:
+
+```cmd
 npm run dev
+```
 
 O servidor será iniciado em:
 http://localhost:3333
@@ -144,8 +147,9 @@ imagens;
 README;
 repositório público.
 
-Arquitetura da aplicação
+## Arquitetura da aplicação
 
+```text
 Usuário
    ↓
 Front-end HTML/CSS/JavaScript
@@ -156,14 +160,3 @@ Supabase
    ↓
 Tabela inscritos
 
-As notícias são obtidas da API externa do blog, enquanto os e-mails da newsletter são enviados para o backend próprio e armazenados no Supabase.
-Autor
-Projeto acadêmico desenvolvido por Lucas Mota.
-Plain Text
-
-Depois salve o arquivo e envie para o GitHub:
-
-```cmd
-git add README.md
-git commit -m "Adiciona documentação do projeto"
-git push
