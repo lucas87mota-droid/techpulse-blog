@@ -1,0 +1,399 @@
+/*
+  TECHPULSE — FOLHA DE ESTILOS
+  Esta folha complementa o Bootstrap com a identidade visual do blog.
+  Organização: variáveis, base, navegação, tipografia, hero, cards,
+  categoria, leitura, rodapé e responsividade.
+*/
+
+/* ==================== VARIÁVEIS DO TEMA ==================== */
+:root {
+  --ivory: #f7f5ef;
+  --petroleum: #173b40;
+  --coral: #e86a5b;
+  --muted: #6c7a77;
+  --line: #d9ddd7;
+}
+
+/* ==================== BASE ==================== */
+body {
+  background: var(--ivory);
+  color: var(--petroleum);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.display-serif {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
+}
+
+/* ==================== NAVEGAÇÃO ==================== */
+.navbar {
+  border-bottom: 1px solid var(--line);
+  background: rgba(247, 245, 239, 0.96);
+}
+
+.navbar-brand {
+  color: var(--petroleum) !important;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.navbar-brand span,
+.text-coral {
+  color: var(--coral);
+}
+
+.nav-link {
+  color: var(--muted) !important;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--petroleum) !important;
+}
+
+/* ==================== TEXTOS EDITORIAIS ==================== */
+.eyebrow {
+  color: var(--coral);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-number {
+  color: var(--coral);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.hero-rule {
+  border-top: 1px solid var(--line);
+}
+
+/* ==================== HERO DA HOME ==================== */
+.hero-space {
+  padding: 2.5rem 0 3rem;
+}
+
+.hero-space + section {
+  margin-top: -30px;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 0.9;
+}
+
+.hero-title {
+  max-width: 760px;
+}
+
+.hero-banner {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+
+.hero-banner img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+
+.imagem-coluna {
+  padding-top: 10px;
+}
+
+.imagem-hero {
+  display: block;
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 100px;      /* menor */
+  overflow: hidden;
+  border-radius: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 40px;     /* padding vertical bem menor */
+}
+
+.hero-content {
+  max-width: 720px;
+  position: relative;
+  z-index: 2;
+  padding-left: 32px;
+  color: #fff;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.hero-content {
+  max-width: 720px;
+  position: relative;
+  z-index: 2;
+  padding-left: 80px;
+  color: #fff;
+}
+
+
+.hero-content .eyebrow {
+  color: #fff;
+}
+
+.hero-content .hero-title {
+  color: #fff;
+  margin: 0 0 24px;
+}
+
+.hero-content .hero-title em {
+  color: var(--coral);
+  font-style: italic;
+}
+
+.hero-content .lead {
+  max-width: 570px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-explorar {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 20px;
+  border: 1px solid #ffffff;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--coral);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-explorar {
+  position: relative;
+  top: -20px;
+}
+
+.btn-explorar:hover {
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #ffffff;
+}
+
+.btn-leia-mais {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--coral);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--coral);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-leia-mais:hover {
+  background: var(--coral);
+  color: #ffffff;
+}
+
+
+
+/* ==================== HISTÓRIA DE CAPA ==================== */
+.cover-card {
+  background: var(--petroleum);
+  color: var(--ivory);
+}
+
+.cover-card img {
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+}
+
+.cover-card .btn {
+  color: var(--ivory);
+  border-color: rgba(247, 245, 239, 0.45);
+}
+
+.cover-card .btn:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+/* ==================== CARDS DE ARTIGOS ==================== */
+.card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.card-img-top {
+  border-radius: 0;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  filter: saturate(0.8);
+}
+
+.card-title {
+  font-size: 1.65rem;
+  line-height: 1.04;
+}
+
+.card-title a {
+  color: var(--petroleum);
+  text-decoration: none;
+}
+
+.card-title a:hover {
+  color: var(--coral);
+}
+
+.card-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ==================== CATEGORIAS ==================== */
+.category-pills .btn {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.category-pills .btn:hover,
+.category-pills .btn.active {
+  color: var(--coral);
+  border-bottom-color: var(--coral);
+}
+
+.archive-note {
+  background: #ece9e0;
+}
+
+/* ==================== PÁGINA DE LEITURA ==================== */
+.article-cover {
+  max-height: 560px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.article-body {
+  max-width: 700px;
+  color: #3f514e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  line-height: 1.85;
+}
+
+.article-body h2 {
+  color: var(--petroleum);
+  margin-top: 3rem;
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--coral);
+  padding-left: 1.25rem;
+  color: var(--petroleum);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.25;
+}
+
+/* ==================== RODAPÉ E BOTÕES ==================== */
+.footer {
+  background: #0f2e33;
+  color: var(--ivory);
+}
+
+.footer a {
+  color: rgba(247, 245, 239, 0.7);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--ivory);
+}
+
+.btn-primary {
+  background: var(--petroleum);
+  border-color: var(--petroleum);
+}
+
+.btn-primary:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.btn-outline-dark {
+  border-color: var(--petroleum);
+  color: var(--petroleum);
+}
+
+.btn-outline-dark:hover {
+  background: var(--petroleum);
+  color: var(--ivory);
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+@media (max-width: 767px) {
+  .hero-content {
+    padding-left: 20px;
+  }
+}
+
+  .article-body {
+    font-size: 1.05rem;
+  }
+
+  .cover-card img {
+    min-height: 220px;
+  }
+
