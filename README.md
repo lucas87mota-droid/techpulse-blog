@@ -97,45 +97,64 @@ npm run dev
 O servidor será iniciado em:
 http://localhost:3333
 
-Rotas da API
-Verificação do servidor
-http
+## Rotas da API
+
+### Verificação do servidor
+
+```http
 GET /api/health
+```
 
 Resposta:
-JSON
+
+```json
 {
   "status": "ok",
   "servico": "techpulse-backend"
 }
+```
 
-Cadastro de inscrito
-http
+### Cadastro de inscrito
+
+```http
 POST /api/inscritos
+```
 
 Corpo da requisição:
-JSON
+
+```json
 {
   "email": "leitor@example.com"
 }
+```
 
 Possíveis respostas:
-201: e-mail cadastrado;
-400: e-mail inválido;
-409: e-mail já cadastrado;
-500: erro no servidor ou no Supabase.
 
-Banco de dados
-A tabela utilizada é:
+- `201`: e-mail cadastrado;
+- `400`: e-mail inválido;
+- `409`: e-mail já cadastrado;
+- `500`: erro no servidor ou no Supabase.
+## Banco de dados
+
+A tabela utilizada pelo sistema é:
+
+```text
 inscritos
+```
 
 Ela possui as seguintes colunas:
+
+```text
 id
 email
 data_cadastro
+```
 
 O script de criação está em:
+
+```text
 database/supabase.sql
+```
 
 Segurança
 O arquivo .env está protegido pelo .gitignore e não deve ser enviado ao GitHub.
