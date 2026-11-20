@@ -1,259 +1,178 @@
 (function () {
   "use strict";
 
-  /*
-    URL da API externa que fornece as notícias.
-  */
-  var apiUrl =
-    "https://api-fake-blog.onrender.com/postagens";
+  var apiUrl = "https://api-fake-blog.onrender.com/postagens";
 
-  /*
-    Dados do projeto Supabase.
+  var imagensLocais = [
+    "IMG/google-news.jpg",
+    "IMG/macbookIMG_1008.jpg",
+    "IMG/Citroen Ami Buggy.webp",
+    "IMG/sega.jpg",
+    "IMG/metaverse-weg 3 virtual-love-collage_52683-89576.jpg",
+    "IMG/Metaverso .webp"
+  ];
 
-    Substitua os textos abaixo pelos dados reais
-    encontrados em:
-
-    Supabase
-    → Project Settings
-    → API
-
-    Use somente a chave pública/anon/publishable.
-    Nunca use a service_role key no navegador.
-  */
-  var supabaseUrl =
-    "https://rhpjbzxhzdbblyzzhhqy.supabase.co";
-
-  var supabaseKey =
-    "sb_publishable_cY6TL7ksU6qoY1OyF4sgMw_Po_c5BJZ";
-
-  /*
-    Cria a conexão com o Supabase.
-  */
-  var supabaseClient = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-  );
-
-  /*
-    Obtém o índice da publicação pela URL.
-
-    Exemplo:
-
-    leitura.html?post=2
-
-    Resultado:
-
-    índice 2
-  */
   function obterIndiceDaPublicacao() {
-    var resultado = window.location.search.match(
-      /[?&]post=(\d+)/
-    );
+    var resultado = window.location.search.match(/[?&]post=(\d+)/);
+    var indice = resultado ? parseInt(resultado[1], 10) : 0;
 
-    var indice = resultado
-      ? parseInt(resultado[1], 10)
-      : 0;
-
-    return isNaN(indice) || indice < 0
-      ? 0
-      : indice;
+    return isNaN(indice) || indice < 0 ? 0 : indice;
   }
 
-  /*
-    Módulo principal do AngularJS.
-  */
+  function contemTermoDeInteligenciaArtificial(publicacao) {
+    var texto = [
+      publicacao.categoria,
+      publicacao.category,
+      publicacao.title,
+      publicacao.description,
+      publicacao.thumbImageAltText
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    var termos = [
+      "inteligência artificial",
+      "inteligencia artificial",
+      "artificial intelligence",
+      "machine learning",
+      "deep learning",
+      "google",
+      "metaverso"
+    ];
+
+    return termos.some(function (termo) {
+      return texto.indexOf(termo) !== -1;
+    });
+  }
+
+  function configurarPublicacao(publicacao, indice) {
+    if (!publicacao) {
+      return publicacao;
+    }
+
+    publicacao.indiceOriginal = indice;
+    publicacao.imagemLocal =
+      imagensLocais[indice % imagensLocais.length] || imagensLocais[0];
+
+    return publicacao;
+  }
+
+  function carregarPublicacoes($http, sucesso, erro, finalizacao) {
+    $http
+      .get(apiUrl)
+      .then(function (response) {
+        var publicacoes = Array.isArray(response.data) ? response.data : [];
+
+        sucesso(publicacoes);
+      })
+      .catch(function (error) {
+        console.error("Erro ao carregar as publicações:", error);
+        erro(error);
+      })
+      .finally(finalizacao);
+  }
+
   angular
     .module("blog", [])
-
-    /*
-      Controller usado pelo index.html.
-    */
-    .controller("Rest", function ($scope, $http ) {
-      /*
-        Variáveis utilizadas para carregar as notícias.
-      */
+    .controller("Rest", function ($scope, $http) {
       $scope.publicacoes = [];
+      $scope.imagensLocais = imagensLocais;
       $scope.carregando = true;
       $scope.erro = false;
 
-      $scope.imagensLocais = [
-        "IMG/google-news.jpg",
-        "IMG/macbookIMG_1008.jpg",
-        "IMG/Citroen Ami Buggy.webp",
-        "IMG/sega.jpg",
-        "IMG/Metaverso .webp",
-        "IMG/metaverse-weg 3 virtual-love-collage_52683-89576.jpg"
-      ];
+      carregarPublicacoes(
+        $http,
+        function (publicacoes) {
+          $scope.publicacoes = publicacoes.map(configurarPublicacao);
+        },
+        function () {
+          $scope.erro = true;
+        },
+        function () {
+          $scope.carregando = false;
+        }
+      );
+    })
+    .controller("Newsletter", function ($scope, $http) {
+      var backendUrl = "http://localhost:3333/api/inscritos";
 
+      $scope.emailInscrito = "";
+      $scope.enviandoInscricao = false;
+      $scope.mensagemInscricao = "";
+      $scope.erroInscricao = false;
 
-      /*
-        Variáveis utilizadas pelo formulário
-        de cadastro no Supabase.
-      */
-      $scope.novoInscrito = {
-        email: ""
-      };
-
-      $scope.salvandoInscrito = false;
-      $scope.inscricaoSucesso = false;
-      $scope.inscricaoErro = false;
-
-      /*
-        Função responsável por cadastrar o e-mail
-        na tabela "inscritos" do Supabase.
-      */
       $scope.cadastrarInscrito = function () {
-        /*
-          Inicia o estado de carregamento do botão.
-        */
-        $scope.salvandoInscrito = true;
+        if (!$scope.emailInscrito || $scope.enviandoInscricao) {
+          return;
+        }
 
-        /*
-          Limpa mensagens anteriores.
-        */
-        $scope.inscricaoSucesso = false;
-        $scope.inscricaoErro = false;
+        $scope.enviandoInscricao = true;
+        $scope.mensagemInscricao = "";
+        $scope.erroInscricao = false;
 
-        /*
-          Envia o e-mail para a tabela "inscritos".
-        */
-        supabaseClient
-          .from("inscritos")
-          .insert([
-            {
-              email: $scope.novoInscrito.email
-            }
-          ])
-          .then(function (resultado) {
-            /*
-              Se o Supabase retornar erro,
-              interrompe o fluxo e vai para o catch.
-            */
-            if (resultado.error) {
-              throw resultado.error;
-            }
-
-            /*
-              Limpa o campo do formulário.
-            */
-            $scope.novoInscrito.email = "";
-
-            /*
-              Exibe a mensagem de sucesso.
-            */
-            $scope.inscricaoSucesso = true;
+        $http
+          .post(backendUrl, {
+            email: $scope.emailInscrito
+          })
+          .then(function (response) {
+            $scope.mensagemInscricao = response.data.mensagem;
+            $scope.emailInscrito = "";
           })
           .catch(function (error) {
-            /*
-              Exibe o erro no console
-              e mostra a mensagem no HTML.
-            */
-            console.error(
-              "Erro ao cadastrar e-mail:",
-              error
-            );
-
-            $scope.inscricaoErro = true;
+            $scope.erroInscricao = true;
+            $scope.mensagemInscricao =
+              error.data && error.data.mensagem
+                ? error.data.mensagem
+                : "Não foi possível concluir o cadastro.";
           })
           .finally(function () {
-            /*
-              Libera o botão novamente.
-            */
-            $scope.salvandoInscrito = false;
-
-            /*
-              Atualiza a tela do AngularJS.
-            */
-            $scope.$applyAsync();
+            $scope.enviandoInscricao = false;
           });
       };
-
-      /*
-        Busca as notícias na API.
-      */
-      $http
-        .get(apiUrl)
-
-        /*
-          Executado quando a API responde com sucesso.
-        */
-        .then(function (response) {
-          $scope.publicacoes = response.data || [];
-        })
-
-        /*
-          Executado quando ocorre erro na API.
-        */
-        .catch(function (error) {
-          console.error(
-            "Erro ao carregar as publicações:",
-            error
-          );
-
-          $scope.erro = true;
-        })
-
-        /*
-          Executado quando o carregamento termina,
-          com sucesso ou com erro.
-        */
-        .finally(function () {
-          $scope.carregando = false;
-        });
     })
+    .controller("Category", function ($scope, $http) {
+      $scope.publicacoes = [];
+      $scope.imagensLocais = imagensLocais;
+      $scope.carregando = true;
+      $scope.erro = false;
 
-    /*
-      Controller usado pelo leitura.html.
-    */
-    .controller("Leitura", function ($scope, $http ) {
-      /*
-        Obtém o índice da publicação pela URL.
-      */
+      carregarPublicacoes(
+        $http,
+        function (publicacoes) {
+          $scope.publicacoes = publicacoes
+            .map(configurarPublicacao)
+            .filter(contemTermoDeInteligenciaArtificial);
+        },
+        function () {
+          $scope.erro = true;
+        },
+        function () {
+          $scope.carregando = false;
+        }
+      );
+    })
+    .controller("Leitura", function ($scope, $http) {
       var indice = obterIndiceDaPublicacao();
 
-      /*
-        Variáveis utilizadas na página de leitura.
-      */
       $scope.publicacao = null;
       $scope.carregando = true;
       $scope.erro = false;
 
-      /*
-        Busca todas as publicações na API.
-      */
-      $http
-        .get(apiUrl)
-
-        /*
-          Seleciona somente a publicação
-          correspondente ao índice da URL.
-        */
-        .then(function (response) {
-          var publicacoes = response.data || [];
-
-          $scope.publicacao =
-            publicacoes[indice] ||
-            publicacoes[0] ||
-            null;
-        })
-
-        /*
-          Trata erros da página de leitura.
-        */
-        .catch(function (error) {
-          console.error(
-            "Erro ao carregar a publicação:",
-            error
+      carregarPublicacoes(
+        $http,
+        function (publicacoes) {
+          $scope.publicacao = configurarPublicacao(
+            publicacoes[indice] || publicacoes[0] || null,
+            indice
           );
-
+        },
+        function () {
           $scope.erro = true;
-        })
-
-        /*
-          Finaliza o carregamento.
-        */
-        .finally(function () {
+        },
+        function () {
           $scope.carregando = false;
-        });
+        }
+      );
     });
 })();

@@ -37,8 +37,9 @@ h3,
 
 .navbar-brand {
   color: var(--petroleum) !important;
-  font-weight: 800;
-  letter-spacing: -0.06em;
+  font-family: "Space Grotesk", Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
 .navbar-brand span,
@@ -397,3 +398,84 @@ h3,
     min-height: 220px;
   }
 
+/* Banner com imagem inteira e texto sobreposto */
+.cover-card {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #173b40;
+}
+
+.cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.58) 45%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(560px, 100%);
+  min-height: 360px;
+  padding: 4rem;
+  color: #ffffff;
+}
+
+.cover-content h2 {
+  color: #ffffff;
+}
+
+.cover-content .eyebrow {
+  color: #ff6a4d;
+}
+
+@media (max-width: 767px) {
+  .cover-card {
+    min-height: 560px;
+  }
+
+  .cover-content {
+    min-height: 560px;
+    padding: 2rem;
+  }
+}
+
+.btn-outline-dark {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+.btn-outline-dark:hover {
+  background: var(--coral);
+  color: #ffffff;
+}
+
+.editorial-hero {
+    position: relative;
+
+    width: 100%;       /* Largura */
+    height: 400px;     /* Altura */
+    border-radius: 30px;
+
+    background-image: url('/IMG/Inteligência Artificial_ Tecnologia Editorial.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
